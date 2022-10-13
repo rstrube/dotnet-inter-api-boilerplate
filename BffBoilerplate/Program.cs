@@ -1,6 +1,8 @@
+using System.Linq;
 using BffBoilerplate.Clients;
 using BffBoilerplate.Configuration;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +41,13 @@ internal sealed class Program
 
     static void ConfigureServices(WebApplicationBuilder builder)
     {
+        // grab the cors section and config object
+		var corsSection = builder.Configuration.GetSection(CorsConfig.Section);
+		var corsConfig = corsSection.Get<CorsConfig>();
+
+        // configure CORS
+        builder.Services.AddCors(corsOptions => ConfigureCorsOptions(corsOptions, corsConfig));
+
         // get a specific section from appSettings.json
         var boredClientSection = builder.Configuration.GetSection(BoredClientConfig.Section);
 
@@ -69,6 +78,32 @@ internal sealed class Program
         builder.Services.AddSwaggerGen();
     }
 
+    static void ConfigureCorsOptions(CorsOptions corsOptions, CorsConfig corsConfig)
+    {
+        if (corsConfig.AllowAnyOrigin)
+        {
+            corsOptions.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+        }
+
+        else if (corsConfig.AllowedOrigins != null && corsConfig.AllowedOrigins.Length > 0)
+        {
+            corsOptions.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.WithOrigins(corsConfig.AllowedOrigins)
+                          .SetIsOriginAllowedToAllowWildcardSubdomains()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+        }
+    }
+
     static void ConfigureApp(WebApplication app)
     {
         // Configure the HTTP request pipeline.
@@ -84,6 +119,8 @@ internal sealed class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors();
         app.UseAuthorization();
         app.MapControllers();
     }
