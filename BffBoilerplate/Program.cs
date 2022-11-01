@@ -1,4 +1,3 @@
-using System.Linq;
 using BffBoilerplate.Clients;
 using BffBoilerplate.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +5,8 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
 
 namespace BffBoilerplate;
 
@@ -13,15 +14,31 @@ internal sealed class Program
 {
     static void Main(string[] args)
     {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateLogger();
+
+        Log.Information("Starting BFF API application");
+
         var builder = CreateHostBuilder(args);
 
+        Log.Information("Configured HostBuilder");
+
         ConfigureServices(builder);
+
+        Log.Information("Configured Services");
 
         var app = builder.Build();
 
         ConfigureApp(app);
 
+        Log.Information("Configured App");
+
         app.Run();
+
+        Log.Information("BFF API application is running");
     }
 
     static WebApplicationBuilder CreateHostBuilder(string[] args)
@@ -34,6 +51,13 @@ internal sealed class Program
             config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
             config.AddJsonFile($"appsettings.Secret.json", optional: true, reloadOnChange: true);
             config.AddEnvironmentVariables();
+        });
+
+        builder.Host.UseSerilog((context, services, configuration) =>
+        {
+            configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services);
         });
 
         return builder;
