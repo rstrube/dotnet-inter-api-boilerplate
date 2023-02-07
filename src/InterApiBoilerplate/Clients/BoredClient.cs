@@ -2,11 +2,11 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using BffBoilerplate.Clients.Models;
-using BffBoilerplate.Configuration;
+using InterApiBoilerplate.Clients.Models;
+using InterApiBoilerplate.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace BffBoilerplate.Clients;
+namespace InterApiBoilerplate.Clients;
 
 /// <summary>
 /// Client for the upstream API (https://www.boredapi.com/)

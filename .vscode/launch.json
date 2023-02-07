@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/BffBoilerplate/bin/Debug/net6.0/BffBoilerplate.dll",
+            "program": "${workspaceFolder}/src/InterApiBoilerplate/bin/Debug/net6.0/InterApiBoilerplate.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/BffBoilerplate",
+            "cwd": "${workspaceFolder}/InterApiBoilerplate",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

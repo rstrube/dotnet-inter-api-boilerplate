@@ -1,4 +1,4 @@
-namespace BffBoilerplate.Configuration;
+namespace InterApiBoilerplate.Configuration;
 
 public class CorsConfig
 {

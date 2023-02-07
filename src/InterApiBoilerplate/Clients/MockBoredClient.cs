@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using BffBoilerplate.Clients.Models;
+using InterApiBoilerplate.Clients.Models;
 
-namespace BffBoilerplate.Clients;
+namespace InterApiBoilerplate.Clients;
 
 public class MockBoredClient : IBoredClient
 {

@@ -1,47 +1,59 @@
-using BffBoilerplate.Clients;
-using BffBoilerplate.Configuration;
+using System;
+using InterApiBoilerplate.Clients;
+using InterApiBoilerplate.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
 
-namespace BffBoilerplate;
+namespace InterApiBoilerplate;
 
-internal sealed class Program
+public sealed class Program
 {
-    static void Main(string[] args)
+    private static ILogger<Program>? _logger;
+    
+    public static int Main(string[] args)
     {
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .CreateLogger();
+        var hostBuilder = CreateHostBuilder(args);
+        
+        ConfigureServices(hostBuilder);
 
-        Log.Information("Starting BFF API application");
+        var app = hostBuilder.Build();
 
-        var builder = CreateHostBuilder(args);
+        using(var serviceScope = app.Services.CreateScope())
+        {
+            var services = serviceScope.ServiceProvider;
+            _logger = services.GetRequiredService<ILogger<Program>>();
+        }
 
-        Log.Information("Configured HostBuilder");
+        try
+        {
+            ConfigureApp(app);
 
-        ConfigureServices(builder);
+            _logger.LogInformation("Intermediate API Boilerplate successfully bootstrapped.");
 
-        Log.Information("Configured Services");
+            app.Run();
 
-        var app = builder.Build();
+            _logger.LogInformation("Intermediate API Boilerplate stopped cleanly.");
 
-        ConfigureApp(app);
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Intermediate API Boilerplate unhandled exception.");
 
-        Log.Information("Configured App");
-
-        app.Run();
-
-        Log.Information("BFF API application is running");
+            return 1;
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
     }
 
-    static WebApplicationBuilder CreateHostBuilder(string[] args)
+    private static WebApplicationBuilder CreateHostBuilder(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +75,7 @@ internal sealed class Program
         return builder;
     }
 
-    static void ConfigureServices(WebApplicationBuilder builder)
+    private static void ConfigureServices(WebApplicationBuilder builder)
     {
         // grab the cors section and config object
 		var corsSection = builder.Configuration.GetSection(CorsConfig.Section);
@@ -102,7 +114,7 @@ internal sealed class Program
         builder.Services.AddSwaggerGen();
     }
 
-    static void ConfigureCorsOptions(CorsOptions corsOptions, CorsConfig corsConfig)
+    private static void ConfigureCorsOptions(CorsOptions corsOptions, CorsConfig corsConfig)
     {
         if (corsConfig.AllowAnyOrigin)
         {
@@ -128,7 +140,7 @@ internal sealed class Program
         }
     }
 
-    static void ConfigureApp(WebApplication app)
+    private static void ConfigureApp(WebApplication app)
     {
         // Configure the HTTP request pipeline.
 

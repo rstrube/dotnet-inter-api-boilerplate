@@ -1,10 +1,15 @@
-using BffBoilerplate.Clients.Models;
+using InterApiBoilerplate.Clients.Models;
 
-namespace BffBoilerplate.Models;
+namespace InterApiBoilerplate.Models;
 
 /// <summary>
-/// This is the data model that will be presented to our front-end,
-/// it extrapolates and refines some of the data returned by the upstream API (https://www.boredapi.com/) we are calling
+/// This is the intermediate API model that will be presented to and used by our application.
+/// This could be:
+/// 1. Front-end Javascript calling the intermediate API directly via an XHR.
+/// 2. Back-end code on our web application calling the intermediate API.
+/// This particular intermediate API model extrapolates and refines the data returned by the upstream API model (https://www.boredapi.com/).
+/// Sometimes you will map the upstream API model to the intermediate API model 1:1 (in terms of properties).
+/// In this case it's still important to build a dedicated intermediate API model (in case upstream API models change).
 /// </summary>
 public class Activity 
 {

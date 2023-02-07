@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "BffBoilerplate": {
+    "InterApiBoilerplate": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
