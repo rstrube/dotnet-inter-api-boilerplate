@@ -88,11 +88,11 @@ This API application also demonstrates how to separate out the the upstream data
 
 ## Building and Running
 
-* Navigate to `src/InterApiBoilerplate`
-* Run `dotnet run`
-* Application is available ot `https://locahost:5000`
+1. Navigate to `src/InterApiBoilerplate`
+2. Run `dotnet run`
+3. Application is accessible at `https://localhost:5000` (by default)
 
-You can use [Postman](https://www.postman.com/) or your web browser (the calls are only GETs for this API application) to test out the various calls.
+You can then use [Postman](https://www.postman.com/) or your web browser (the calls are only GETs for this API application) to test out the various calls.
 
 ### Suggest an Activity for one Person
 
