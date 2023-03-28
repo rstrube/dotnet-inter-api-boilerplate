@@ -3,7 +3,7 @@ using InterApiBoilerplate.Clients;
 using InterApiBoilerplate.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace InterApiBoilerplate.Controllers;
 
@@ -40,15 +40,20 @@ public class ActivityController : ControllerBase
             return NotFound();
         }
 
-        _logger.LogInformation($"Received activity from upstream API:\n{JsonConvert.SerializeObject(boredActivity, Formatting.Indented)}");
+        _logger.LogInformation($"Received activity from upstream API:\n{JsonSerializer.Serialize(boredActivity, _jsonSerializerOptions)}");
 
         // convert the upstream API model to a refined model targetted towards our front-end
         var activity = new Activity(boredActivity);
 
-        _logger.LogInformation($"Converted upstream API model to intermediate API model:\n{JsonConvert.SerializeObject(activity, Formatting.Indented)}");
+        _logger.LogInformation($"Converted upstream API model to intermediate API model:\n{JsonSerializer.Serialize(activity, _jsonSerializerOptions)}");
 
         return Ok(activity);
     }
+
+    private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
+    {
+        WriteIndented = true
+    };
 
     private readonly ILogger<ActivityController> _logger;
     private readonly IBoredClient _boredClient;

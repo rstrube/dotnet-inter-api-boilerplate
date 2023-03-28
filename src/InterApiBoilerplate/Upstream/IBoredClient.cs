@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using InterApiBoilerplate.Clients.Models;
+using InterApiBoilerplate.Upstream.Models;
 
 namespace InterApiBoilerplate.Clients;
 

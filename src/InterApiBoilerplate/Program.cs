@@ -17,11 +17,11 @@ public sealed class Program
     
     public static int Main(string[] args)
     {
-        var hostBuilder = CreateHostBuilder(args);
+        var webAppBuilder = CreateWebAppBuilder(args);
         
-        ConfigureServices(hostBuilder);
+        ConfigureServices(webAppBuilder);
 
-        var app = hostBuilder.Build();
+        var app = webAppBuilder.Build();
 
         using(var serviceScope = app.Services.CreateScope())
         {
@@ -53,7 +53,7 @@ public sealed class Program
         }
     }
 
-    private static WebApplicationBuilder CreateHostBuilder(string[] args)
+    private static WebApplicationBuilder CreateWebAppBuilder(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 

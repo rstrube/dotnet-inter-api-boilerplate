@@ -1,4 +1,4 @@
-namespace InterApiBoilerplate.Clients.Models;
+namespace InterApiBoilerplate.Upstream.Models;
 
 /// <summary>
 /// The data model used by the upstream API (https://www.boredapi.com/)

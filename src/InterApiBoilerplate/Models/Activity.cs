@@ -1,4 +1,4 @@
-using InterApiBoilerplate.Clients.Models;
+using InterApiBoilerplate.Upstream.Models;
 
 namespace InterApiBoilerplate.Models;
 
@@ -31,7 +31,7 @@ public class Activity
     public decimal Price { get; set; } = 0.00M;
     public string? Uri { get; set; }
     public decimal AccessibilityScore { get; set; } = 0.00M;
-    public string AccessibiltyRating => AccessibilityScore switch
+    public string AccessibilityRating => AccessibilityScore switch
     {
         > 0.66M => "Hard",
         > 0.33M => "Intermediate",

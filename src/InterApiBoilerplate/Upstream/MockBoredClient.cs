@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using InterApiBoilerplate.Clients.Models;
+using InterApiBoilerplate.Upstream.Models;
 
 namespace InterApiBoilerplate.Clients;
 
@@ -17,7 +17,7 @@ public class MockBoredClient : IBoredClient
             numOfParticipants = 1;
         }
 
-        var activitySuffix = numOfParticipants > 1 ? "people" : "persion";
+        var activitySuffix = numOfParticipants > 1 ? "people" : "person";
 
         return new BoredActivity()
         {

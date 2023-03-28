@@ -1,8 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
-using InterApiBoilerplate.Clients.Models;
+using InterApiBoilerplate.Upstream.Models;
 using InterApiBoilerplate.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -43,7 +44,7 @@ public class BoredClient : IBoredClient
         }
 
         var rawString = await response.Content.ReadAsStringAsync();
-        return await response.Content.ReadAsAsync<BoredActivity>();
+        return await response.Content.ReadFromJsonAsync<BoredActivity>();
     }
 
     private readonly IOptions<BoredClientConfig> _boredClientConfig;
