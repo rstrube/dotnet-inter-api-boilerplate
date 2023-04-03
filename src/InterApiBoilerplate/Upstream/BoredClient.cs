@@ -7,7 +7,7 @@ using InterApiBoilerplate.Upstream.Models;
 using InterApiBoilerplate.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace InterApiBoilerplate.Clients;
+namespace InterApiBoilerplate.Upstream.Clients;
 
 /// <summary>
 /// Client for the upstream API (https://www.boredapi.com/)

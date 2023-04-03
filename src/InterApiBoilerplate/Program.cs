@@ -1,5 +1,5 @@
 using System;
-using InterApiBoilerplate.Clients;
+using InterApiBoilerplate.Upstream.Clients;
 using InterApiBoilerplate.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;

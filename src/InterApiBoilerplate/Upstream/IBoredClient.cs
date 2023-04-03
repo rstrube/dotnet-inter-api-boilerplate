@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using InterApiBoilerplate.Upstream.Models;
 
-namespace InterApiBoilerplate.Clients;
+namespace InterApiBoilerplate.Upstream.Clients;
 
 public interface IBoredClient
 {

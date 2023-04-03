@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using InterApiBoilerplate.Clients;
+using InterApiBoilerplate.Upstream.Clients;
 using InterApiBoilerplate.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
